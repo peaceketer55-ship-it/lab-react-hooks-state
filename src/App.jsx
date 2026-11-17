@@ -1,38 +1,69 @@
+
 import React, { useState } from 'react'
 import ProductList from './components/ProductList'
 import DarkModeToggle from './components/DarkModeToggle'
 import Cart from './components/Cart'
 
 const App = () => {
-  // TODO: Implement state for dark mode toggle
+  // Dark mode state
+  const [darkMode, setDarkMode] = useState(false)
 
-  // TODO: Implement state for cart management
+  // Cart state
+  const [cartItems, setCartItems] = useState([])
 
-  // TODO: Implement state for category filtering
+  // Category filter state
+  const [selectedCategory, setSelectedCategory] = useState('all')
+
+  // Function to add products to cart
+  const addToCart = (product) => {
+    setCartItems([...cartItems, product])
+  }
 
   return (
-    <div>
+    <div
+      style={{
+        backgroundColor: darkMode ? '#222' : '#fff',
+        color: darkMode ? '#fff' : '#000',
+        minHeight: '100vh',
+        padding: '20px'
+      }}
+    >
       <h1>🛒 Shopping App</h1>
+
       <p>
         Welcome! Your task is to implement filtering, cart management, and dark
         mode.
       </p>
 
-      {/* TODO: Render DarkModeToggle and implement dark mode functionality */}
+      {/* Dark Mode Toggle */}
+      <DarkModeToggle
+        darkMode={darkMode}
+        setDarkMode={setDarkMode}
+      />
 
-      {/* TODO: Implement category filter dropdown */}
+      {/* Category Filter */}
       <label>Filter by Category: </label>
-      <select>
+
+      <select
+        value={selectedCategory}
+        onChange={(event) => setSelectedCategory(event.target.value)}
+      >
         <option value="all">All</option>
         <option value="Fruits">Fruits</option>
         <option value="Dairy">Dairy</option>
       </select>
 
-      <ProductList />
+      {/* Product List */}
+      <ProductList
+        selectedCategory={selectedCategory}
+        addToCart={addToCart}
+      />
 
-      {/* TODO: Implement and render Cart component */}
+      {/* Cart */}
+      <Cart cartItems={cartItems} />
     </div>
   )
 }
 
 export default App
+
